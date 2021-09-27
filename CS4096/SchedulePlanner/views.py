@@ -6,3 +6,8 @@ class Index(View):
     template_name = "SchedulePlanner/index.html"
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+class Credits(View):
+    template_name = "SchedulePlanner/credits.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
