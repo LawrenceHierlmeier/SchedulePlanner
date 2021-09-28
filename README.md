@@ -19,3 +19,7 @@ Update the requirements.txt after installing any new modules:
 
 Run the server:  
 `python manage.py runserver`
+
+After making any changes to models.py:  
+`python manage.py makemigrations`  
+`python manage.py migrate`
