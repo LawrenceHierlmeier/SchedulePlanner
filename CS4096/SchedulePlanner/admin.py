@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, Course
 from .forms import RegisterForm, CustomUserChangeForm
 
 # Register your models here.
+@admin.register(User)
 class CustomUserAdmin(UserAdmin):
     add_form = RegisterForm
     form = CustomUserChangeForm
@@ -23,5 +24,7 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
 
-
-admin.site.register(User, CustomUserAdmin)
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('course_number', 'name', 'credits')
+    
