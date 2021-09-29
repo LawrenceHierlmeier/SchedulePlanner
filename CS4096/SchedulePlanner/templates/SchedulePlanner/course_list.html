@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Schedule Planner App - Credits{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>List of courses:</h1>
+    <div class="card-group">
+        {% for course in object_list %}
+        <div class="card">
+            <div class="card-header">
+                {{course.course_number}}: {{course.name}} 
+                <span class="float-end">Credits: {{course.credits}}</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{course.name}}</h5>
+                <p class="card-text">{{course.description}}</p>
+                <br>
+                <p class="card-text">Requirements: {{course.requirements | default:"No Special Requirements"}}</p>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+{% endblock %}
