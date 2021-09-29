@@ -23,3 +23,6 @@ Run the server:
 After making any changes to models.py:  
 `python manage.py makemigrations`  
 `python manage.py migrate`
+
+To import catalog data:  
+`python scraper.py`
