@@ -12,6 +12,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CS4096.settings")
 
 test_catalog = "Comp Sci"
 degreeAbbreviation = ['Comp Sci', 'Math', 'Comp Eng', 'Philos', 'Stat']
+differentWebpages = ['aero-eng', 'arch-eng', 'art', 'bio-sci', 'bus', 'cer-eng', 'chem-eng', 'chem', 'civ-eng', 'comp-eng', 'comp-sci', 'econ', 'educ', 'elec-eng', 'eng-mgt', 'english', 'erp', 'env-eng', 'etym', 'exp-eng', 'finance', 'french', 'fr-eng', 'geo-eng', 'geology', 'geophys', 'german', 'history', 'is-t', 'mkt', 'ms-e', 'math', 'mech-eng', 'met-eng', 'mil-air', 'mil-army', 'min-eng', 'music', 'nuc-eng', 'pet-eng', 'philos', 'phys-ed', 'physics', 'pol-sci', 'premed', 'psych', 'russian', 'spanish', 'sp-m-s', 'stat', 'sys-eng', 'tch-com', 'theatre']
 
 
 def find_all_substring(a_str, sub):
