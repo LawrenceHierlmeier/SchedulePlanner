@@ -23,9 +23,21 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
+    #m2m relationship with courses to list earned credits
+    earned_credits = models.ManyToManyField(Course)
+
+    #another m2m for planned courses, goes through "scheduled" class to keep track of planned semester
+    planned_credits = models.ManyToManyField(Course, through="Scheduled")
+
     def __str__(self):
         return self.email
         
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+
+class Scheduled(models.Model):
+    course = ForeignKey(Course, on_delete=models.CASCADE)
+    user = ForeignKey(User, on_delete=models.CASCADE)
+    #storing planned semester as text field for now - possibly stored as integer field, but we'd have to define a "semester 0"
+    semester = models.TextField()
