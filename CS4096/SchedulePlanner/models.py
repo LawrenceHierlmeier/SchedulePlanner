@@ -23,11 +23,8 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
-    #m2m relationship with courses to list earned credits
-    earned_credits = models.ManyToManyField(Course)
-
-    #another m2m for planned courses, goes through "scheduled" class to keep track of planned semester
-    planned_credits = models.ManyToManyField(Course, through="Scheduled")
+    #m2m relationship with courses to list planned/taken courses
+    planned_credits = models.ManyToManyField(Course, through="CreditHour")
 
     def __str__(self):
         return self.email
@@ -36,8 +33,21 @@ class User(AbstractUser):
     def name(self):
         return f"{self.first_name} {self.last_name}"
 
-class Scheduled(models.Model):
+#class for keeping track of taken and/or planned credits, dependent on scheduled date
+class CreditHour(models.Model):
     course = ForeignKey(Course, on_delete=models.CASCADE)
     user = ForeignKey(User, on_delete=models.CASCADE)
-    #storing planned semester as text field for now - possibly stored as integer field, but we'd have to define a "semester 0"
-    semester = models.TextField()
+    #storing date of course start - ashton's semester calculation is now used for semester
+    date = models.TextField()
+
+    @property
+    def semester(self):
+        if self.date.month == 1:
+            season = "Spring"
+        elif self.date.month == 6:
+            season = "Summer"
+        elif self.date.month == 8:
+            season = "Fall"
+        else:
+            raise RuntimeError(f"{self.date.month} is an invalid")
+        return f"{season} {self.date.year}"
