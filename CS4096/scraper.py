@@ -13,9 +13,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CS4096.settings")
 test_catalog = "Comp Sci"
 
 #all major undergrade degrees not including minors
-degreeAbbreviation = ['Aero Eng',             'Mil Air',           'Arch Eng',                 'Art', 'Alp',                        'Bio Sci',            'Bus',                          'Cer Eng',            'Chem Eng',                          'Chem',      'Civ Eng',          'Comp Eng',            'Comp Sci',        'Econ',      'Educ',      'Elec Eng',              'Eng Mgt',               'English',                          'Erp',                        'Env Eng',                  'Etyn',      'Exp Eng',               'Finance', 'Fr Eng',                                     'French', 'Geo Eng',               'Geology',              'German', 'History', 'IS&T',                            'Mkt',       'MS&E',                           'Math',        'Mech Eng',              'Met Eng',                  'Mil Army',        'Min Eng',           'Music', 'Nuc Eng',            'Pet Eng',              'Philos',     'Phys Ed',                        'Physics', 'Pol Sci',          'Premed',               'Psych',      'Russian', 'Spanish', 'Sp&m S',                'Stat',       'Sys Eng',            'Theatre']
-degrees =            ['aerospaceengineering', 'aerospace-studies', 'architecturalengineering', 'art', 'artslanguagesandphilosophy', 'biologicalsciences', 'businessandmanagementsystems', 'ceramicengineering', 'chemicalandbiochemicalengineering', 'chemistry', 'civilengineering', 'computerengineering', 'computerscience', 'economics', 'education', 'electricalengineering', 'engineeringmanagement', 'englishandtechnicalcommunication', 'enterpriseresourceplanning', 'environmentalengineering', 'etymology', 'explosivesengineering', 'finance', 'foundationalengineeringandcomputingprogram', 'french', 'geologicalengineering', 'geologyandgeophysics', 'german', 'history', 'informationscienceandtechnology', 'marketing', 'materialsscienceandengineering', 'mathematics', 'mechanicalengineering', 'metallurgicalengineering', 'militaryscience', 'miningengineering', 'music', 'nuclearengineering', 'petroleumengineering', 'philosophy', 'physicaleducationandrecreation', 'physics', 'politicalscience', 'prehealthprofessions', 'psychology', 'russian', 'spanish', 'speechandmediastudies', 'statistics', 'systemsengineering', 'theatre']
-
+degreeAbbreviation = ['Aero Eng', 'Arch Eng', 'Art', 'Bio Sci', 'Bus', 'Cer Eng', 'Chem Eng', 'Chem', 'Civ Eng', 'Comp Eng', 'Comp Sci', 'Econ', 'Educ', 'Elec Eng', 'Eng Mgt', 'English', 'Erp', 'Env Eng', 'Etym', 'Exp Eng', 'Finance', 'French', 'Fr Eng', 'Geo Eng', 'Geology', 'GeoPhys', 'German', 'History', 'IS&T', 'Mkt', 'MS&E', 'Math', 'Mech Eng', 'Met Eng', 'Mil Air', 'Mil Army', 'Min Eng', 'Music', 'Nuc Eng', 'Pet Eng', 'Philos', 'Phys Ed', 'Physics', 'Pol Sci', 'Premed', 'Psych', 'Russian', 'Spanish', 'Sp&m S', 'Stat', 'Sys Eng', 'Tch Com', 'Theatre']
+differentWebpages = ['aero-eng', 'arch-eng', 'art', 'bio-sci', 'bus', 'cer-eng', 'chem-eng', 'chem', 'civ-eng', 'comp-eng', 'comp-sci', 'econ', 'educ', 'elec-eng', 'eng-mgt', 'english', 'erp', 'env-eng', 'etym', 'exp-eng', 'finance', 'french', 'fr-eng', 'geo-eng', 'geology', 'geophys', 'german', 'history', 'is-t', 'mkt', 'ms-e', 'math', 'mech-eng', 'met-eng', 'mil-air', 'mil-army', 'min-eng', 'music', 'nuc-eng', 'pet-eng', 'philos', 'phys-ed', 'physics', 'pol-sci', 'premed', 'psych', 'russian', 'spanish', 'sp-m-s', 'stat', 'sys-eng', 'tch-com', 'theatre']
+degreeNames = []
 
 def find_all_substring(a_str, sub):
     start = 0
@@ -30,11 +30,11 @@ def find_all_substring(a_str, sub):
 def find_course_prereqs(block):
     desc = block.find('p', class_="courseblockdesc").text
     prereq_text = desc[desc.find("Prerequisite"):desc.find("Co-listed")]
-    prereq_text = prereq_text[prereq_text.find('"C"'):]
+    #prereq_text = prereq_text[prereq_text.find('"C"'):]
     prereq_text = prereq_text[:prereq_text.find('accompanied')]
     # print(block.find("p", class_="courseblocktitle").find("em").text[15:])
     for name in degreeAbbreviation:
-        indexes = list(find_all_substring(prereq_text, name))
+        indexes = list(find_all_substring(prereq_text.lower(), name.lower()))
         # print(indexes)
         for index in indexes:
             # print(prereq_text[index:index + len(name)])
@@ -45,8 +45,8 @@ def find_course_prereqs(block):
 if not os.path.exists('courses.json'):
     # Web Scrape
     data = {}
-    for i in range(len(degrees)):
-        URL = 'https://catalog.mst.edu/undergraduate/degreeprogramsandcourses/' + degrees[i] + '/#courseinventory'
+    for i in range(len(differentWebpages)):
+        URL = 'https://catalog.mst.edu/explorecourses/' + differentWebpages[i] + '/#courseinventory'
         page = get(URL)
 
         soup = BeautifulSoup(page.content, "html.parser")
@@ -58,13 +58,13 @@ if not os.path.exists('courses.json'):
         test_catalog = degreeAbbreviation[i]
 
             #array of all names in json goes here
-        data[degrees[i]] = []
+        data[differentWebpages[i]] = []
 
         for count, course_block in enumerate(course_blocks):
             prereq_list = list(find_course_prereqs(course_block))
-            data[degrees[i]].append({
-                'course_number': test_catalog + " " + course_block.find("p", class_="courseblocktitle").find("em").text[9:13],
-                'name': course_block.find("p", class_="courseblocktitle").find("em").text[15:],
+            data[differentWebpages[i]].append({
+                'course_number': test_catalog + " " + course_block.find("p", class_="courseblocktitle").find("em").text[len(test_catalog)+1:len(test_catalog)+5],
+                'name': course_block.find("p", class_="courseblocktitle").find("em").text[len(test_catalog)+7:],
                 'description': course_block.find('p', class_="courseblockdesc").text,
                 'requirements': prereq_list,
                 'credits': course_block.find("p", class_="courseblocktitle").text[course_block.find("p", class_="courseblocktitle").text.find("(")+5:-3] if len(course_block.find("p", class_="courseblocktitle").text[course_block.find("p", class_="courseblocktitle").text.find("("):]) == 9 else "99",
@@ -81,7 +81,7 @@ if os.path.exists('courses.json'):
 
     with open('courses.json') as json_file:
         data = json.load(json_file)
-        for var in degrees:
+        for var in differentWebpages:
             for course_block in data[var]:
                 course = Course(
                     course_number=course_block['course_number'],

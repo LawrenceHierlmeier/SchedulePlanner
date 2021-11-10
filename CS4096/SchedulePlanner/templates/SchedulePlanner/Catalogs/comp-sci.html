@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Schedule Planner App - Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-1">Schedule Planner App - Catalogs</h1>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        {% for course in object_list %}
+        {% if "Comp Sci" in course.course_number %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-header">
+                    {{course.course_number}}: {{course.name}}
+                    <span class="float-end">Credits: {{course.credits}}</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{course.name}}</h5>
+                    <p class="card-text">{{course.description}}</p>
+                    <br>
+                </div>
+                <div class="card-footer"><p class="card-text">Requirements: {{course.requirements | default:"No Special Requirements"}}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {%endfor%}
+</div>
+{% endblock %}
+
