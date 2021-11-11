@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#111111" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#eeeeee" media="(prefers-color-scheme: dark)">
 
-    <title>{% block title %}Schedule Planner App{% endblock %}</title>
+    <title>{% block title %}Degree Planner{% endblock %}</title>
     <style>
         /* For nav bar */
         body {
@@ -22,7 +22,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">Schedule Planner</a>
+            <a class="navbar-brand" href="{% url 'index' %}">Degree Planner</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,13 +32,13 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'course_list' %}">All Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'catalog_directory' %}">Department Catalogs</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'credits' %}">Credits</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'course_list' %}">Course List</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'catalog_directory' %}">Catalogs</a>
                 </li>
                 </ul>
                 <div class="d-flex">

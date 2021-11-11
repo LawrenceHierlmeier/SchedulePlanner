@@ -10,9 +10,16 @@ class Course(models.Model):
     requirements = models.TextField()
     credits = models.IntegerField()
     full_text = models.TextField()
+    department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return f"{self.course_number} - {self.name}"
+
+
+class Department(models.Model):
+    name = models.TextField(null=True, blank=True)
+    abbreviation = models.TextField()
+    slug = models.TextField()
 
 class User(AbstractUser):
     username = None

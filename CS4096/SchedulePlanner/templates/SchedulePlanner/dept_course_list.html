@@ -4,9 +4,9 @@
 
 {% block content %}
 <div class="container">
-    <h1>List of courses:</h1>
+    <h1>List of courses in the {{department.name}} department:</h1>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-        {% for course in object_list %}
+        {% for course in department.course_set.all %}
         {% include "scheduleplanner/course_card.html" with course=course %}
         {%endfor%}
     </div>

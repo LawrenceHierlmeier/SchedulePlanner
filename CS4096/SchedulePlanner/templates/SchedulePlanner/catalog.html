@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Schedule Planner App - Credits{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-1">Catalog Directory</h1>
+    <ul>
+    {% for dept in object_list %}
+        <li><a href="{% url 'catalog_dept_course_list' dept.slug%}">{{dept.name}} Catalog</a></li>
+    {%endfor%}
+    </ul>
+</div>
+{% endblock %}

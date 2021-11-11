@@ -3,7 +3,7 @@ from django.views import View, generic
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from SchedulePlanner.forms import RegisterForm
-from .models import Course
+from .models import *
 
 
 class Index(View):
@@ -33,8 +33,13 @@ class Register(CreateView):
 
 
 class CatalogDirectory(generic.ListView):
-    model = Course
-    template_name = "SchedulePlanner/catalog_directory.html"
+    model = Department
+    template_name = "SchedulePlanner/catalog.html"
+
+class DeptCourseList(generic.DetailView):
+    model = Department
+    template_name = "SchedulePlanner/dept_course_list.html"
+    slug_url_kwarg = "dept_slug"
 
 
 class AeroEng(generic.ListView):
