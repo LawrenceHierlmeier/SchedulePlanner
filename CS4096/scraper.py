@@ -26,21 +26,90 @@ def find_all_substring(a_str, sub):
         yield start
         start += len(sub)
 
+def add_requirements(text):
+    stringLang = '('
+    indexes = []
+    indexDict = {}
+    for name in degreeAbbreviation:
+        indexForMajor = list(find_all_substring(text.lower(), name.lower()))
+        for i in indexForMajor:
+            indexDict[i] = name
+        indexes += indexForMajor
+    indexes.sort()
+    for index in indexes:
+        if 'or' in text[index-3:index]:
+            stringLang += ' or '+str(text[index:index + len(indexDict[index]) + 5])
+        elif ',' in text[index-3:index]:
+            stringLang += ' and '+str(text[index:index + len(indexDict[index]) + 5])
+        else:
+            for word in [';', 'and']:
+                if word in text[index-4:index]:
+                    stringLang += ') and ('+str(text[index:index + len(indexDict[index]) + 5])
+                    break
+            else:
+                if '.' not in text[index-3:index]:
+                    stringLang += str(text[index:index + len(indexDict[index]) + 5])
+    if stringLang[-1] == '(':
+        stringLang = stringLang[0:len(stringLang)-1]+')'
+    elif stringLang[-1] != ')':
+        stringLang += ')'
+    if stringLang == ')':
+        return ''
+    else:
+        return stringLang
+
 
 def find_course_prereqs(block):
-    desc = block.find('p', class_="courseblockdesc").text
-    prereq_text = desc[desc.find("Prerequisite"):desc.find("Co-listed")]
-    #prereq_text = prereq_text[prereq_text.find('"C"'):]
-    prereq_text = prereq_text[:prereq_text.find('accompanied')]
-    # print(block.find("p", class_="courseblocktitle").find("em").text[15:])
-    for name in degreeAbbreviation:
-        indexes = list(find_all_substring(prereq_text.lower(), name.lower()))
-        # print(indexes)
-        for index in indexes:
-            # print(prereq_text[index:index + len(name)])
-            # print(prereq_text[index + len(name) + 1:index + len(name) + 5])
-            yield prereq_text[index:index + len(name)], prereq_text[index + len(name) + 1:index + len(name) + 5]
+    prereqs = {'prerequisites': '', 'co-listed': '', 'accompanied': ''}
 
+    desc = block.find('p', class_="courseblockdesc").text
+    pre_text = desc[desc.find("Prerequisite"):desc.find("Co-listed")]
+    pre_text = pre_text[:pre_text.find('accompanied')]
+    co_text = desc[desc.find("Co-listed"):]
+    co_text = co_text[:desc.find('accompanied')]
+    accompanied_text = desc[desc.find('accompanied'):]
+    
+    desc = desc.lower()
+    prereqs['prerequisites'] = add_requirements(pre_text)
+    if "sophomore" in desc:
+        if prereqs['prerequisites'] == '':
+            prereqs['prerequisites'] = "30 credit hours"
+        else:
+            prereqs['prerequisites'] += " and 30 credit hours"
+    elif "junior" in desc:
+        if prereqs['prerequisites'] == '':
+            prereqs['prerequisites'] = "60 credit hours"
+        else:
+            prereqs['prerequisites'] += " and 60 credit hours"
+    elif "senior or graduate standing" in desc:
+        if prereqs['prerequisites'] == '':
+            prereqs['prerequisites'] = "90 credit hours"
+        else:
+            prereqs['prerequisites'] += " and 90 credit hours"
+    elif "senior" in desc:
+        if prereqs['prerequisites'] == '':
+            prereqs['prerequisites'] = "90 credit hours"
+        else:
+            prereqs['prerequisites'] += " and 90 credit hours"
+    elif "graduate" in desc:
+        if prereqs['prerequisites'] == '':
+            prereqs['prerequisites'] = "Graduate standing"
+        else:
+            prereqs['prerequisites'] += " and Graduate standing"
+    if "literature" in desc:
+        if prereqs['prerequisites'] == '':
+            prereqs['prerequisites'] = "a semester of college literature"
+        else:
+            prereqs['prerequisites'] += " and a semester of college literature"
+    if "consent" in desc:
+        if prereqs['prerequisites'] == '':
+            prereqs['prerequisites'] = "consent of instructor"
+        else:
+            prereqs['prerequisites'] += " and consent of instructor"
+    prereqs['co-listed'] = add_requirements(co_text)
+    prereqs['accompanied'] = add_requirements(accompanied_text)
+    print(prereqs)
+    return prereqs
 
 if not os.path.exists('courses.json'):
     # Web Scrape
@@ -57,11 +126,11 @@ if not os.path.exists('courses.json'):
         # JSON Creation
         test_catalog = degreeAbbreviation[i]
 
-            #array of all names in json goes here
+        #array of all names in json goes here
         data[differentWebpages[i]] = []
 
         for count, course_block in enumerate(course_blocks):
-            prereq_list = list(find_course_prereqs(course_block))
+            prereq_list = find_course_prereqs(course_block)
             data[differentWebpages[i]].append({
                 'course_number': test_catalog + " " + course_block.find("p", class_="courseblocktitle").find("em").text[len(test_catalog)+1:len(test_catalog)+5],
                 'name': course_block.find("p", class_="courseblocktitle").find("em").text[len(test_catalog)+7:],
@@ -100,7 +169,6 @@ if os.path.exists('courses.json'):
                     full_text=course_block['full_text'],
                     department=dept
                 )
-            
                 course.save()
             print(var)
     print("Post-Database")
