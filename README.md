@@ -17,6 +17,9 @@ Install required modules:
 Update the requirements.txt after installing any new modules:  
 `python -m pip freeze > requirements.txt`
 
+Create/update database schema
+`python manage.py migrate`
+
 Run the server:  
 `python manage.py runserver`
 
