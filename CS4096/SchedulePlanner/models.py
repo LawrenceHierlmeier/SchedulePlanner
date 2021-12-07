@@ -31,7 +31,7 @@ class User(AbstractUser):
     objects = CustomUserManager()
 
     #m2m relationship with courses to list planned/taken courses
-    planned_credits = models.ManyToManyField(Course, through="CreditHour")
+    planned_credits = models.ManyToManyField(Course, through="CourseLog")
 
     def __str__(self):
         return self.email
@@ -41,7 +41,7 @@ class User(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
 #class for keeping track of taken and/or planned credits, dependent on scheduled date
-class CreditHour(models.Model):
+class CourseLog(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     #storing date of course start - ashton's semester calculation is now used for semester
