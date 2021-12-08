@@ -28,6 +28,7 @@ class Department(models.Model):
 class User(AbstractUser):
     username = None
     email = models.EmailField("Email Address", unique=True)
+    role = models.TextField(default="Student", choices=[("Student", "Student"), ("Advisor", "Advisor"), ("Faculty", "Faculty"), ("Admin", "Admin")])
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
