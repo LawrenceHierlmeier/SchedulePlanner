@@ -22,7 +22,7 @@
       <div id="spring2022" class="tabcontent">
         {% for course in user.courselog_set.all %}
         {% if course.semester == "Spring 2022" %}
-        {% include "scheduleplanner/course_card.html" with course=course.course %}
+        <div class="my-4">{% include "scheduleplanner/course_card.html" with course=course.course hide_footer=True %}</div>
         {% endif %}
         {%endfor%}
       </div>
@@ -30,7 +30,7 @@
       <div id="summer2022" class="tabcontent">
         {% for course in user.courselog_set.all %}
         {% if course.semester == "Summer 2022" %}
-        {% include "scheduleplanner/course_card.html" with course=course.course %}
+        <div class="my-4">{% include "scheduleplanner/course_card.html" with course=course.course hide_footer=True %}</div>
         {% endif %}
         {%endfor%}
       </div>
@@ -38,7 +38,7 @@
       <div id="fall2022" class="tabcontent">
         {% for course in user.courselog_set.all %}
         {% if course.semester == "Fall 2022" %}
-        {% include "scheduleplanner/course_card.html" with course=course.course %}
+        <div class="my-4">{% include "scheduleplanner/course_card.html" with course=course.course hide_footer=True %}</div>
         {% endif %}
         {%endfor%}
       </div>
@@ -46,7 +46,7 @@
       <div id="spring2023" class="tabcontent">
         {% for course in user.courselog_set.all %}
         {% if course.semester == "Spring 2023" %}
-        {% include "scheduleplanner/course_card.html" with course=course.course %}
+        <div class="my-4">{% include "scheduleplanner/course_card.html" with course=course.course hide_footer=True %}</div>
         {% endif %}
         {%endfor%}
       </div>
@@ -54,7 +54,7 @@
       <div id="summer2023" class="tabcontent">
         {% for course in user.courselog_set.all %}
         {% if course.semester == "Summer 2023" %}
-        {% include "scheduleplanner/course_card.html" with course=course.course %}
+        <div class="my-4">{% include "scheduleplanner/course_card.html" with course=course.course hide_footer=True %}</div>
         {% endif %}
         {%endfor%}
       </div>
@@ -62,7 +62,7 @@
       <div id="fall2023" class="tabcontent">
         {% for course in user.courselog_set.all %}
         {% if course.semester == "Fall 2023" %}
-        {% include "scheduleplanner/course_card.html" with course=course.course %}
+        <div class="my-4">{% include "scheduleplanner/course_card.html" with course=course.course hide_footer=True %}</div>
         {% endif %}
         {%endfor%}
       </div>
@@ -75,7 +75,7 @@
 
       <div class="saved-courses-cards">
         {% for course in user.saved_courses.all %}
-        {% include "scheduleplanner/course_card.html" with course=course %}
+        <div class="my-4">{% include "scheduleplanner/course_card.html" with course=course %}</div>
         {%endfor%}
       </div>
     </div>
