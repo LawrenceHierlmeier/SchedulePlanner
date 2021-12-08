@@ -1,9 +1,15 @@
-from django.shortcuts import render
+import json
+
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.views import View, generic
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from SchedulePlanner.forms import RegisterForm
 from .models import *
+from .forms import CourseLogForm
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 class Index(View):
@@ -47,18 +53,34 @@ class CatalogDirectory(generic.ListView):
 
 class DeptCourseList(generic.DetailView):
     model = Department
+    form = CourseLogForm
     template_name = "SchedulePlanner/dept_course_list.html"
     slug_url_kwarg = "dept_slug"
 
 
-class AeroEng(generic.ListView):
-    model = Course
-    template_name = "SchedulePlanner/Catalogs/aero-eng.html"
+class ListCourseLog(generic.ListView):
+    model = User
+    template_name = "SchedulePlanner/list_courselog.html"
 
 
-class CompSci(generic.ListView):
-    model = Course
-    template_name = "SchedulePlanner/Catalogs/comp-sci.html"
+@csrf_exempt
+def add_courselog(request):
+    if request.method == "POST":
+        print(request.body)
+
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        course_instance = get_object_or_404(Course, pk=body['course_id'])
+
+        cl = CourseLog(
+            course=course_instance,
+            user=request.user,
+            date=body['course_semester']
+        )
+        cl.save()
+
+    return HttpResponse(status=200)
 
 
 

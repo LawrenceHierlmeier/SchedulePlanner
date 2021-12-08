@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Course Log Addition Test{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-1">Course Log Addition Test</h1>
+
+    <!-- {% if user.is_authenticated %}
+        <p> Welcome '{{ user.email }}'</p>
+     {% endif %} -->
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+</div>
+{% endblock %}
