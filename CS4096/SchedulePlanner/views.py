@@ -20,6 +20,15 @@ class Credits(View):
         return render(request, self.template_name)
 
 
+class FacultyDashboard(View):
+    template_name = "SchedulePlanner/faculty_dashboard.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+    def post(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+    pass
+
+
 class CourseList(generic.ListView):
     model = Course
     template_name = "SchedulePlanner/course_list.html"
