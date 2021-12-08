@@ -1,7 +1,7 @@
 <div class="col">
     <div class="card h-100">
         <div class="card-header">
-            {{course.course_number}}: {{course.name}} 
+            {{course.course_number}}: {{course.name}}
             <span class="float-end">Credits: {{course.credits}}</span>
         </div>
         <div class="card-body">
@@ -20,12 +20,71 @@
                 <option value = "2023-06-01">Summer 2023</option>
                 <option value = "2023-08-01">Fall 2023</option>
             </select>
-            <button class="btn btn-success mb-3" onclick="sendCourseJSON({{course.id}})">Add to Degree Plan [NYI]</button>
+            <button class="btn btn-success mb-3 course-button add-course-button" onclick="sendCourseJSON({{course.id}})">
+              <span class="course-button-icon">+</span>
+              <span class="course-button-text">Add to Degree Plan [NYI]</span>
+            </button>
+            <button class="btn btn-warning mb-3 course-button save-course-button" onclick="sendCourseJSON({{course.id}})">
+              <span class="course-button-icon">◷</span>
+              <span class="course-button-text">Save Course</span>
+            </button>
 
         </div>
     </div>
-
-
-
-
 </div>
+
+<style>
+  .course-button{
+    font-weight: bold;
+    border-radius: 60px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    overflow:hidden;
+    width: auto;
+    max-width: 32px;
+    -webkit-transition: max-width 0.5s;
+    transition: max-width 0.5s;
+  }
+
+  .course-button:hover{
+    max-width: 300px;
+  }
+
+  .course-button-icon{
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 15px;
+    /* padding: 0px 8px; */
+    display: flex;
+    align-items: center;
+  }
+
+  .course-button-text{
+    white-space: nowrap;
+    padding-right: 15px;
+    font-weight: bold;
+  }
+
+  .add-course-button{
+    color: black;
+  }
+
+  .save-course-button{
+    color: black;
+  }
+</style>
+
+<!-- .icon {
+  font-family: "Font Awesome 5 Free";
+  font-size: 16px;
+  margin-right: 15px;
+  padding: 0px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  white-space: nowrap;
+  padding-right: 15px;
+} -->
