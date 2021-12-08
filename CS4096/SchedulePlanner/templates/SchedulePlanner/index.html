@@ -3,16 +3,129 @@
 {% block title %}Degree Planner App - Home{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="display-1">Degree Planner - Home</h1>
 
-    <div class="row">
-        <div class="col">
-            If you see this, it's working!
-        </div>
-        <div class="col">
-            Hooray!
-        </div>
+<div class="container">
+    <h1 class="display-1">Current Schedules</h1>
+
+    <div id="semester-tabs" class="side-table" style="float:left">
+      <!-- Tab links -->
+      <div class="tab">
+        <button class="tablinks" onclick="toggleTab(event, 'spring2022')">Spring<br>2022</button>
+        <button class="tablinks" onclick="toggleTab(event, 'summer2022')">Summer<br>2022</button>
+        <button class="tablinks" onclick="toggleTab(event, 'fall2022')">Fall<br>2022</button>
+        <button class="tablinks" onclick="toggleTab(event, 'spring2023')">Spring<br>2023</button>
+      </div>
+
+      <!-- Tab content -->
+      <div id="spring2022" class="tabcontent">
+        <h3>Course Title</h3>
+        <p>Course Info</p>
+      </div>
     </div>
+
+    <div id="saved-courses" class="side-table" style="margin-left:50%">
+      <div class="saved-courses-nav">
+        Saved Courses
+      </div>
+
+      <div class="saved-courses-cards">
+        <p>fdsfds</p>
+      </div>
+    </div>
+
+
 </div>
+
+<style>
+  .side-table{
+    width:40%;
+  }
+
+  /* Style the tab */
+  .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #C5C5C5;
+  }
+
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    color: black;
+    font-weight: bold;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+  }
+
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    text-decoration:underline;
+    text-decoration-thickness: 3px;
+    background-color: #ddd;
+  }
+
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #ccc;
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+  .saved-courses-nav{
+    font-size:200%;
+    text-align:center;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #C5C5C5;
+    color: black;
+    font-weight: bold;
+    float: center;
+    padding: 14px 16px;
+
+  }
+
+  .saved-courses-cards{
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+</style>
+
+<script>
+  function toggleTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks, tabStatus;
+
+    //Checks tab status
+    tabStatus = evt.currentTarget.className.includes(" active");
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    if(tabStatus == false){
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  }
+</script>
 {% endblock %}

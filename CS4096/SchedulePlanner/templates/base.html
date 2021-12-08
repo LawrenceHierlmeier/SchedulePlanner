@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
-    
+
     <!-- Bootstrap Dark Mode https://github.com/vinorodrigues/bootstrap-dark-5/blob/main/docs/bootstrap-dark.md -->
     <meta name="color-scheme" content="light dark">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.0/dist/css/bootstrap-dark.min.css" rel="stylesheet">
@@ -29,31 +29,48 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                    <a id="homeNavLink" class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'course_list' %}">All Courses</a>
+                    <a id="courseNavLink" class="nav-link" href="{% url 'course_list' %}">All Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'catalog_directory' %}">Department Catalogs</a>
+                    <a id="catalogNavLink" class="nav-link" href="{% url 'catalog_directory' %}">Department Catalogs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'credits' %}">Credits</a>
+                    <a id="creditNavLink" class="nav-link" href="{% url 'credits' %}">Credits</a>
                 </li>
                 </ul>
                 <div class="d-flex">
                     <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                     <span class="navbar-text">Hello, {{user.name}} | </span>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    <li class="nav-item"><a id="logoutNavLink" class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a id="loginNavLink" class="nav-link" href="{% url 'login' %}">Login</a></li>
                     <span class="navbar-text">|</span>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    <li class="nav-item"><a id="registerNavLink" class="nav-link" href="{% url 'register' %}">Register</a></li>
                     {% endif %}
                     </ul>
                 </div>
             </div>
+            <script>
+              //Changing class of active page link
+              var currPage = String(window.location.href);
+              var currPageID = "Home";
+              var possPages = ["login", "logout", "register", "course", "catalog", "credit"];
+              var possPageIDs = ["loginNavLink", "logoutNavLink", "registerNavLink", "courseNavLink", "catalogNavLink", "creditNavLink"];
+
+              for(var i = 0; i < possPages.length; i++){
+                if(currPage.includes(possPages[i])){
+                  document.getElementById(possPageIDs[i]).className = "nav-link active";
+                  break;
+                }
+                else if(i == (possPages.length-1)){
+                  document.getElementById("homeNavLink").className = "nav-link active";
+                }
+              }
+            </script>
         </div>
     </nav>
     {% block content %}
