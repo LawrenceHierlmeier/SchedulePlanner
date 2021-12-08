@@ -14,10 +14,40 @@
         <button class="tablinks" onclick="toggleTab(event, 'summer2022')">Summer<br>2022</button>
         <button class="tablinks" onclick="toggleTab(event, 'fall2022')">Fall<br>2022</button>
         <button class="tablinks" onclick="toggleTab(event, 'spring2023')">Spring<br>2023</button>
+        <button class="tablinks" onclick="toggleTab(event, 'summer2023')">Summer<br>2023</button>
+        <button class="tablinks" onclick="toggleTab(event, 'fall2023')">Fall<br>2023</button>
       </div>
 
       <!-- Tab content -->
       <div id="spring2022" class="tabcontent">
+        {% for course in user.planned_credits.all %}
+        {% if course.semester != "Spring 2022" %}
+        {% include "scheduleplanner/course_card.html" with course=course %}
+        {% endif %}
+        {%endfor%}
+      </div>
+
+      <div id="summer2022" class="tabcontent">
+        <h3>Course Title</h3>
+        <p>Course Info</p>
+      </div>
+
+      <div id="fall2022" class="tabcontent">
+        <h3>Course Title</h3>
+        <p>Course Info</p>
+      </div>
+
+      <div id="spring2023" class="tabcontent">
+        <h3>Course Title</h3>
+        <p>Course Info</p>
+      </div>
+
+      <div id="summer2023" class="tabcontent">
+        <h3>Course Title</h3>
+        <p>Course Info</p>
+      </div>
+
+      <div id="fall2023" class="tabcontent">
         <h3>Course Title</h3>
         <p>Course Info</p>
       </div>
@@ -29,7 +59,9 @@
       </div>
 
       <div class="saved-courses-cards">
-        <p>fdsfds</p>
+        {% for course in user.saved_courses.all %}
+        {% include "scheduleplanner/course_card.html" with course=course %}
+        {%endfor%}
       </div>
     </div>
 

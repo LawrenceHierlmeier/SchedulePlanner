@@ -92,5 +92,14 @@
                 course_semester: document.getElementById("courseSemester_" + course_id).value
             }));
          }
+
+        function saveCourseJSON(course_id) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{% url 'add_savedcourselog' %}", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                course_id: course_id
+            }));
+         }
     </script>
 </body>
