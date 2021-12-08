@@ -2,7 +2,7 @@
 <div class="col">
     <div id="complete_card_{{course.id}}" class="card h-100">
         <div class="card-header">
-            {{course.course_number}}: {{course.name}} 
+            {{course.course_number}}: {{course.name}}
             <span class="float-end">Credits: {{course.credits}}</span>
         </div>
         <div class="card-body">
@@ -10,9 +10,10 @@
             <p class="card-text">{{course.description}}</p>
             <br>
         </div>
+        {% if hide_footer != True %}
         <div class="card-footer">
-            <p class="card-text">Requirements: {{course.requirements | default:"No Special Requirements"}}</p>
-            <hr>
+            <!--<p class="card-text">Requirements: {{course.requirements | default:"No Special Requirements"}}</p>
+            <hr>-->
             <select id="courseSemester_{{course.id}}" class="form-select my-3">
                 <option value = "2020-01-01">Spring 2020</option>
                 <option value = "2022-01-01">Spring 2022</option>
@@ -22,9 +23,76 @@
                 <option value = "2023-06-01">Summer 2023</option>
                 <option value = "2023-08-01">Fall 2024</option>
             </select>
-            <span id="card_span_{{course.id}}">
-                <button id="card_button_{{course.id}}" style="background-color:blue" onmouseover="styleUpdate({{course.id}})" onmouseout="styleClear({{course.id}})" onclick=sendCourseJSON({{course.id}}) class="btn btn-success mb-3">{% meet_requirements user.planned_credits.all|join:", " course.requirements course.course_number %}</button>
-            </span>
+
+            <button class="btn btn-success mb-3 course-button add-course-button" onclick="sendCourseJSON({{course.id}})">
+              <span class="course-button-icon">+</span>
+              <span class="course-button-text">Add to Degree Plan</span>
+            </button>
+            <button class="btn btn-warning mb-3 course-button save-course-button" onclick="saveCourseJSON({{course.id}})">
+              <span class="course-button-icon">◷</span>
+              <span class="course-button-text">Save Course</span>
+            </button>
+
         </div>
+        {% endif %}
+
     </div>
+
 </div>
+<!-- 
+<style>
+  .course-button{
+    font-weight: bold;
+    border-radius: 60px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    overflow:hidden;
+    width: auto;
+    max-width: 32px;
+    -webkit-transition: max-width 0.5s;
+    transition: max-width 0.5s;
+  }
+
+  .course-button:hover{
+    max-width: 300px;
+  }
+
+  .course-button-icon{
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 15px;
+    /* padding: 0px 8px; */
+    display: flex;
+    align-items: center;
+  }
+
+  .course-button-text{
+    white-space: nowrap;
+    padding-right: 15px;
+    font-weight: bold;
+  }
+
+  .add-course-button{
+  }
+
+  .save-course-button{
+  }
+</style>
+
+.icon {
+  font-family: "Font Awesome 5 Free";
+  font-size: 16px;
+  margin-right: 15px;
+  padding: 0px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  white-space: nowrap;
+  padding-right: 15px;
+} -->
+
+</div>
+

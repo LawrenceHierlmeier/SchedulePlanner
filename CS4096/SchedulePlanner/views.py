@@ -90,6 +90,20 @@ def add_courselog(request):
 
     return HttpResponse(status=200)
 
+@csrf_exempt
+def add_savedcourselog(request):
+    if request.method == "POST":
+        print(request.body)
 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
 
+        course_instance = get_object_or_404(Course, pk=body['course_id'])
 
+        scl = SavedCourseLog(
+            course=course_instance,
+            user=request.user
+        )
+        scl.save()
+
+    return HttpResponse(status=200)

@@ -18,6 +18,26 @@
             padding-top: 4.5rem;
         }
     </style>
+    <script>
+        function sendCourseJSON(course_id) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{% url 'add_courselog' %}", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                course_id: course_id,
+                course_semester: document.getElementById("courseSemester_" + course_id).value
+            }));
+            }
+
+        function saveCourseJSON(course_id) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{% url 'add_savedcourselog' %}", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                course_id: course_id
+            }));
+            }
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -42,7 +62,7 @@
                 </li>
                 {% if user.is_authenticated and user.role != "Student" %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'faculty_dashboard' %}">Faculty Dashboard</a>
+                    <a id="facultyNavLink" class="nav-link" href="{% url 'faculty_dashboard' %}">Faculty Dashboard</a>
                 </li>
                 {% endif %}
                 </ul>
@@ -63,8 +83,8 @@
               //Changing class of active page link
               var currPage = String(window.location.href);
               var currPageID = "Home";
-              var possPages = ["login", "logout", "register", "course", "catalog", "credit"];
-              var possPageIDs = ["loginNavLink", "logoutNavLink", "registerNavLink", "courseNavLink", "catalogNavLink", "creditNavLink"];
+              var possPages = ["login", "logout", "register", "course", "catalog", "credit", "faculty"];
+              var possPageIDs = ["loginNavLink", "logoutNavLink", "registerNavLink", "courseNavLink", "catalogNavLink", "creditNavLink","facultyNavLink"];
 
               for(var i = 0; i < possPages.length; i++){
                 if(currPage.includes(possPages[i])){
@@ -115,4 +135,3 @@
 
     </script>
 </body>
-

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Course, Department, CourseLog
+from .models import *
 from .forms import RegisterForm, CustomUserChangeForm
 
 # Register your models here.
@@ -36,3 +36,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 @admin.register(CourseLog)
 class CourseLogAdmin(admin.ModelAdmin):
     list_display = ('course', 'user', 'date')
+
+@admin.register(SavedCourseLog)
+class SavedCourseLogAdmin(admin.ModelAdmin):
+    list_display = ('course', 'user')

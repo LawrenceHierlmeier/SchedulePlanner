@@ -10,5 +10,6 @@ urlpatterns = [
     path('catalog/<slug:dept_slug>', views.DeptCourseList.as_view(), name='catalog_dept_course_list'),
     path('list_courselog/', views.ListCourseLog.as_view(), name='list_courselog'),
     path('add_courselog/', views.add_courselog, name='add_courselog'),
+    path('add_savedcourselog/', views.add_savedcourselog, name='add_savedcourselog'),
     path('faculty_dashboard/', views.FacultyDashboard.as_view(), name='faculty_dashboard'),
 ]

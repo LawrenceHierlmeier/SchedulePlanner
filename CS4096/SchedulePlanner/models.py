@@ -38,10 +38,11 @@ class User(AbstractUser):
 
     #m2m relationship with courses to list planned/taken courses
     planned_credits = models.ManyToManyField(Course, through="CourseLog")
+    saved_courses = models.ManyToManyField(Course, through="SavedCourseLog", related_name="saved_courses")
 
     def __str__(self):
         return self.email
-        
+
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
@@ -65,3 +66,9 @@ class CourseLog(models.Model):
         else:
             raise RuntimeError(f"{self.date.month} is an invalid")
         return f"{season} {self.date.year}"
+
+
+class SavedCourseLog(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #storing date of course start - ashton's semester calculation is now used for semester
