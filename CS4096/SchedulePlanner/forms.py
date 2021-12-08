@@ -18,7 +18,7 @@ class CustomUserChangeForm(UserChangeForm):
 class CourseLogForm(ModelForm):
     class Meta:
         model = CourseLog
-        fields = ('course', 'user', 'date')
+        fields = ('course', 'user', 'date', 'taken)
 
 class SavedCourseLogForm(ModelForm):
     class Meta:

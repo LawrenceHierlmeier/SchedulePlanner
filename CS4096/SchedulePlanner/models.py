@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
-
+from django import template
+import logging
 
 class Course(models.Model):
     course_number = models.TextField()
@@ -13,7 +14,7 @@ class Course(models.Model):
     department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
-        return f"{self.course_number} - {self.name}"
+        return f"{self.course_number}"
 
 
 class Department(models.Model):
@@ -21,8 +22,8 @@ class Department(models.Model):
     abbreviation = models.TextField()
     slug = models.TextField()
 
-    def __str__(self):
-        return f"{self.abbreviation}"
+    def __str__(name):
+        return f"{name}"
 
 
 class User(AbstractUser):
@@ -52,6 +53,7 @@ class CourseLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     #storing date of course start - ashton's semester calculation is now used for semester
     date = models.DateField()
+    taken = models.BooleanField(default='False')
 
     @property
     def semester(self):

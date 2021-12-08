@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -51,9 +52,10 @@ class CatalogDirectory(generic.ListView):
     model = Department
     template_name = "SchedulePlanner/catalog.html"
 
+
 class DeptCourseList(generic.DetailView):
     model = Department
-    form = CourseLogForm
+    #form = CourseLogForm
     template_name = "SchedulePlanner/dept_course_list.html"
     slug_url_kwarg = "dept_slug"
 
@@ -73,10 +75,16 @@ def add_courselog(request):
 
         course_instance = get_object_or_404(Course, pk=body['course_id'])
 
+        if body['course_semester'] < datetime.today().strftime('%Y-%m-%d'):
+            taken_tmp = True
+        else:
+            taken_tmp = False
+
         cl = CourseLog(
             course=course_instance,
             user=request.user,
-            date=body['course_semester']
+            date=body['course_semester'],
+            taken=taken_tmp
         )
         cl.save()
 
