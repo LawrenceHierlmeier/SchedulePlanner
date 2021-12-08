@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, CourseLog
+from .models import User, CourseLog, SavedCourseLog
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -19,3 +19,8 @@ class CourseLogForm(ModelForm):
     class Meta:
         model = CourseLog
         fields = ('course', 'user', 'date')
+
+class SavedCourseLogForm(ModelForm):
+    class Meta:
+        model = SavedCourseLog
+        fields = ('course', 'user')
