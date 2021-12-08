@@ -89,9 +89,30 @@
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify({
                 course_id: course_id,
-                course_semester: document.getElementById("courseSemester_" + course_id).value
+                course_semester: document.getElementById("courseSemester_" + course_id).value,
             }));
          }
+
+        function styleUpdate(course_id) {
+            console.log(course_id)
+            if ( document.getElementById("card_button_" + course_id).textContent == "Add to Degree Plan" ) {
+            document.getElementById("complete_card_" + course_id).style.backgroundColor = "green";
+                //document.getElementById("card_span_" + course_id).innerHTML = '<button id="card_button_' + course_id + '" style="background-color:blue" onmouseover="styleUpdate(' + course_id + ')" onmouseout="styleClear(' + course_id + ')" onclick=sendCourseJSON(' + course_id + ') class="btn btn-success mb-3">Add to Degree Plan</button>'
+            }
+            else if ( document.getElementById("card_button_" + course_id).textContent == "Already In Degree Plan" ) {
+                document.getElementById("complete_card_" + course_id).style.backgroundColor = "blue";
+                //document.getElementById("card_span_" + course_id).innerHTML = '<button id="card_button_' + course_id + '" style="background-color:blue" onmouseover="styleUpdate(' + course_id + ')" onmouseout="styleClear(' + course_id + ')" class="btn btn-success mb-3">Cannot Add to Degree</button>'
+            }
+            else {
+                document.getElementById("complete_card_" + course_id).style.backgroundColor = "red";
+            }
+        }
+
+        function styleClear(course_id) {
+            console.log(course_id);
+            document.getElementById("complete_card_" + course_id).style.backgroundColor = "";
+        }
+
     </script>
 </body>
 

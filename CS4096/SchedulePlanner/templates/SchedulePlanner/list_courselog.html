@@ -3,13 +3,14 @@
 {% block title %}Degree Planner App - Home{% endblock %}
 
 {% block content %}
+
+{% load user_extras %}
 <div class="container">
-    {% for user in object_list %}
     <ul>
+        <li>{{user}}</li>
         <li>{{user.name}}</li>
         <li>{{user.email}}</li>
         <li>{{user.planned_credits.all|join:", "}}</li>
     </ul>
-    {%endfor%}
 </div>
 {% endblock %}

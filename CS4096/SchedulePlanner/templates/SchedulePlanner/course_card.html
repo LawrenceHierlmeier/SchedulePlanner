@@ -1,5 +1,6 @@
+{% load user_extras %}
 <div class="col">
-    <div class="card h-100">
+    <div id="complete_card_{{course.id}}" class="card h-100">
         <div class="card-header">
             {{course.course_number}}: {{course.name}} 
             <span class="float-end">Credits: {{course.credits}}</span>
@@ -13,19 +14,17 @@
             <p class="card-text">Requirements: {{course.requirements | default:"No Special Requirements"}}</p>
             <hr>
             <select id="courseSemester_{{course.id}}" class="form-select my-3">
+                <option value = "2020-01-01">Spring 2020</option>
                 <option value = "2022-01-01">Spring 2022</option>
                 <option value = "2022-06-01">Summer 2022</option>
                 <option value = "2022-08-01">Fall 2022</option>
                 <option value = "2023-01-01">Spring 2023</option>
                 <option value = "2023-06-01">Summer 2023</option>
-                <option value = "2023-08-01">Fall 2023</option>
+                <option value = "2023-08-01">Fall 2024</option>
             </select>
-            <button class="btn btn-success mb-3" onclick="sendCourseJSON({{course.id}})">Add to Degree Plan [NYI]</button>
-
+            <span id="card_span_{{course.id}}">
+                <button id="card_button_{{course.id}}" style="background-color:blue" onmouseover="styleUpdate({{course.id}})" onmouseout="styleClear({{course.id}})" onclick=sendCourseJSON({{course.id}}) class="btn btn-success mb-3">{% meet_requirements user.planned_credits.all|join:", " course.requirements course.course_number %}</button>
+            </span>
         </div>
     </div>
-
-
-
-
 </div>
