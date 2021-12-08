@@ -40,6 +40,11 @@
                 <li class="nav-item">
                     <a id="creditNavLink" class="nav-link" href="{% url 'credits' %}">Credits</a>
                 </li>
+                {% if user.is_authenticated and user.role != "Student" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'faculty_dashboard' %}">Faculty Dashboard</a>
+                </li>
+                {% endif %}
                 </ul>
                 <div class="d-flex">
                     <ul class="navbar-nav">

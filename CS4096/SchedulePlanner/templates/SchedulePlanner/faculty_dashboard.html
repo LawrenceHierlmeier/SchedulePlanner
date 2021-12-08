@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %}Schedule Planner App - Credits{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+        {% if user.role == "Student" %}
+        <div>
+            <p>Sorry, your user account is marked as a "Student" account. "Student" accounts are not authorized to access this page. Please contact your IT Administrator if you believe this is an error.</p>
+        </div>
+        {% endif %}
+        {% if user.role == "Faculty" or user.role == "Admin" %}
+        <h1>Faculty Dashboard</h1>
+        <div>
+            <p>This dashboard contains metrics about courses offered and when students are planning on taking them. You may use this data to estimate future class enrollment and plan for an appropriate number of sections.</p>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Course Number</th>
+                        <th scope="col">Course Name</th>
+                        <th class="col">Semester</th>
+                        <th class="col">Pending Students</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Comp Sci 1200</td>
+                        <td>Discrete Mathematics for Computer Science</td>
+                        <td>Spring 2022</td>
+                        <td>36</td>
+                    </tr>
+                    <tr>
+                        <td>Comp Sci 1200</td>
+                        <td>Discrete Mathematics for Computer Science</td>
+                        <td>Fall 2022</td>
+                        <td>57</td>
+                    </tr>
+                    <tr>
+                        <td>Comp Sci 1200</td>
+                        <td>Discrete Mathematics for Computer Science</td>
+                        <td>Spring 2023</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>Comp Sci 2500</td>
+                        <td>Algorithms</td>
+                        <td>Spring 2022</td>
+                        <td>52</td>
+                    </tr>
+                    <tr>
+                        <td>Comp Sci 2500</td>
+                        <td>Algorithms</td>
+                        <td>Fall 2022</td>
+                        <td>88</td>
+                    </tr>
+                    <tr>
+                        <td>Comp Sci 2500</td>
+                        <td>Algorithms</td>
+                        <td>Spring 2023</td>
+                        <td>42</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        {% if user.role == "Advisor" or user.role == "Admin" %}
+        <h1>Advisor Dashboard</h1>
+        <div>
+            <p>This dashboard contains metrics about the courses your advisees are planning on taking.</p>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th class="col">Credits Earned</th>
+                        <th class="col">Expected Graduation Date</th>
+                        <th class="col">Show Schedule</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Austin</td>
+                        <td>Wall</td>
+                        <td>126</td>
+                        <td>Summer 2022</td>
+                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#modal_1" class="btn btn-info btn-sm">Show Schedule</button>
+                            <div class="modal" id="modal_1" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Austin Wall</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6>Spring 2022</h6>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Course</th>
+                                                        <th scope="col">Course Name</th>
+                                                        <th class="col">Credits</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Comp Sci 1200</td>
+                                                        <td>Discrete Mathematics for Computer Science</td>
+                                                        <td>3</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Comp Sci 2500</td>
+                                                        <td>Algorithms</td>
+                                                        <td>3</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">TOTAL</th>
+                                                        <td></td>
+                                                        <td>6</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <h6>Summer 2022</h6>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Course</th>
+                                                        <th scope="col">Course Name</th>
+                                                        <th class="col">Credits</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Phys Ed 1001</td>
+                                                        <td>Underwater Skydiving</td>
+                                                        <td>3</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">TOTAL</th>
+                                                        <td></td>
+                                                        <td>3</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    {% else %}
+        <div>
+            <p>You must be logged in to access this page.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
