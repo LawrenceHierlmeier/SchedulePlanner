@@ -21,6 +21,10 @@ class Department(models.Model):
     abbreviation = models.TextField()
     slug = models.TextField()
 
+    def __str__(self):
+        return f"{self.abbreviation}"
+
+
 class User(AbstractUser):
     username = None
     email = models.EmailField("Email Address", unique=True)

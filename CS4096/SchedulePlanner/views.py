@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from SchedulePlanner.forms import RegisterForm
 from .models import *
+from .forms import CourseLogForm
 
 
 class Index(View):
@@ -38,18 +39,25 @@ class CatalogDirectory(generic.ListView):
 
 class DeptCourseList(generic.DetailView):
     model = Department
+    form = CourseLogForm
     template_name = "SchedulePlanner/dept_course_list.html"
     slug_url_kwarg = "dept_slug"
 
 
-class AeroEng(generic.ListView):
-    model = Course
-    template_name = "SchedulePlanner/Catalogs/aero-eng.html"
+class ListCourseLog(generic.ListView):
+    model = User
+    template_name = "SchedulePlanner/list_courselog.html"
 
 
-class CompSci(generic.ListView):
-    model = Course
-    template_name = "SchedulePlanner/Catalogs/comp-sci.html"
+def add_courselog(request):
+    if request.method == "POST":
+        form = CourseLogForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #return
+
+    form = CourseLogForm()
+    return render(request, "SchedulePlanner/add_courselog.html", {'form': form})
 
 
 
