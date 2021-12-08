@@ -12,13 +12,20 @@
         <div class="card-footer">
             <p class="card-text">Requirements: {{course.requirements | default:"No Special Requirements"}}</p>
             <hr>
-            <select class="form-select my-3">
-                <option>Spring 2022</option>
-                <option>Fall 2022</option>
-                <option>Spring 2023</option>
-                <option>Fall 2023</option>
+            <select id="courseSemester_{{course.id}}" class="form-select my-3">
+                <option value = "2022-01-01">Spring 2022</option>
+                <option value = "2022-06-01">Summer 2022</option>
+                <option value = "2022-08-01">Fall 2022</option>
+                <option value = "2023-01-01">Spring 2023</option>
+                <option value = "2023-06-01">Summer 2023</option>
+                <option value = "2023-08-01">Fall 2023</option>
             </select>
-            <button class="btn btn-success mb-3">Add to Degree Plan [NYI]</button>
+            <button class="btn btn-success mb-3" onclick="sendCourseJSON({{course.id}})">Add to Degree Plan [NYI]</button>
+
         </div>
     </div>
+
+
+
+
 </div>

@@ -49,7 +49,7 @@ class CourseLog(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     #storing date of course start - ashton's semester calculation is now used for semester
-    date = models.TextField()
+    date = models.DateField()
 
     @property
     def semester(self):

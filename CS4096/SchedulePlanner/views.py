@@ -1,10 +1,15 @@
-from django.shortcuts import render
+import json
+
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.views import View, generic
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from SchedulePlanner.forms import RegisterForm
 from .models import *
 from .forms import CourseLogForm
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 class Index(View):
@@ -49,15 +54,24 @@ class ListCourseLog(generic.ListView):
     template_name = "SchedulePlanner/list_courselog.html"
 
 
+@csrf_exempt
 def add_courselog(request):
     if request.method == "POST":
-        form = CourseLogForm(request.POST)
-        if form.is_valid():
-            form.save()
-            #return
+        print(request.body)
 
-    form = CourseLogForm()
-    return render(request, "SchedulePlanner/add_courselog.html", {'form': form})
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        course_instance = get_object_or_404(Course, pk=body['course_id'])
+
+        cl = CourseLog(
+            course=course_instance,
+            user=request.user,
+            date=body['course_semester']
+        )
+        cl.save()
+
+    return HttpResponse(status=200)
 
 
 
